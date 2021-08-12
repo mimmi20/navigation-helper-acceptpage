@@ -13,6 +13,7 @@ declare(strict_types = 1);
 namespace Mimmi20Test\NavigationHelper\Accept;
 
 use Interop\Container\ContainerInterface;
+use Laminas\Permissions\Acl\Acl;
 use Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\NavigationHelper\Accept\AcceptHelper;
 use Mimmi20\NavigationHelper\Accept\AcceptHelperFactory;
@@ -118,6 +119,40 @@ final class AcceptHelperFactoryTest extends TestCase
 
         self::assertNull($helper->getAuthorization());
         self::assertNull($helper->getRole());
+        self::assertTrue($helper->getRenderInvisible());
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
+    public function testInvocationWithOptions3(): void
+    {
+        $container = $this->getMockBuilder(ContainerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $container->expects(self::never())
+            ->method('get');
+
+        $auth            = $this->createMock(Acl::class);
+        $renderInvisible = true;
+        $role            = 'test-role';
+
+        assert($container instanceof ContainerInterface);
+        $helper = ($this->factory)(
+            $container,
+            '',
+            [
+                'authorization' => $auth,
+                'renderInvisible' => $renderInvisible,
+                'role' => $role,
+            ]
+        );
+
+        self::assertInstanceOf(AcceptHelper::class, $helper);
+
+        self::assertSame($auth, $helper->getAuthorization());
+        self::assertSame($role, $helper->getRole());
         self::assertTrue($helper->getRenderInvisible());
     }
 
