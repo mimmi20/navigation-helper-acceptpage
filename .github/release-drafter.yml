@@ -1,4 +1,4 @@
-template: |
+navigation-helper-acceptpage: |
   ## What’s Changed
 
   $CHANGES
@@ -32,7 +32,7 @@ categories:
   - title: '**🧹 Maintenance:**'
     labels:
       - 'maintenance'
-  # other Labels to mimmi20/template
+  # other Labels to mimmi20/navigation-helper-acceptpage
   #- title: '**📦 new Useragents:**'
   #  labels:
   #    - 'new useragents'
