@@ -16,6 +16,7 @@ use Laminas\Navigation\AbstractContainer;
 use Laminas\Navigation\Exception\BadMethodCallException;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mezzio\Navigation\ContainerInterface;
 use Mezzio\Navigation\Page\PageInterface;
@@ -487,16 +488,23 @@ final class AcceptHelperTest extends TestCase
      */
     public function testDoNotAcceptByAuthorizationWithParent7(): void
     {
-        $role      = 'testRole';
-        $resource  = 'testResource';
-        $privilege = 'testPrivilege';
+        $role       = 'testRole';
+        $resourceId = 'testResource';
+        $privilege  = 'testPrivilege';
+
+        $resource = $this->getMockBuilder(ResourceInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $resource->expects(self::once())
+            ->method('getResourceId')
+            ->willReturn($resourceId);
 
         $auth = $this->getMockBuilder(Acl::class)
             ->disableOriginalConstructor()
             ->getMock();
         $auth->expects(self::once())
             ->method('isAllowed')
-            ->with($role, $resource, $privilege)
+            ->with($role, $resourceId, $privilege)
             ->willReturn(true);
 
         assert($auth instanceof Acl);
