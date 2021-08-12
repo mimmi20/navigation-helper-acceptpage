@@ -96,7 +96,7 @@ final class AcceptHelper implements AcceptHelperInterface
         if ($accept && $recursive) {
             $parent = $page->getParent();
 
-            if ($parent instanceof PageInterface) {
+            if ($parent instanceof PageInterface || $parent instanceof AbstractPage) {
                 $accept = $this->accept($parent, true);
             }
         }

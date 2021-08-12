@@ -12,6 +12,10 @@ declare(strict_types = 1);
 
 namespace Mimmi20Test\NavigationHelper\Accept;
 
+use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Exception\BadMethodCallException;
+use Laminas\Navigation\Page\AbstractPage;
+use Laminas\Permissions\Acl\Acl;
 use Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mezzio\Navigation\ContainerInterface;
 use Mezzio\Navigation\Page\PageInterface;
@@ -473,6 +477,115 @@ final class AcceptHelperTest extends TestCase
         $helper = new AcceptHelper($auth, false, $role);
 
         assert($page instanceof PageInterface);
+        self::assertFalse($helper->accept($page));
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws BadMethodCallException
+     */
+    public function testDoNotAcceptByAuthorizationWithParent7(): void
+    {
+        $role      = 'testRole';
+        $resource  = 'testResource';
+        $privilege = 'testPrivilege';
+
+        $auth = $this->getMockBuilder(Acl::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $auth->expects(self::once())
+            ->method('isAllowed')
+            ->with($role, $resource, $privilege)
+            ->willReturn(true);
+
+        assert($auth instanceof Acl);
+        $helper = new AcceptHelper($auth, false, $role);
+
+        $parentPage = $this->getMockBuilder(AbstractContainer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $page = $this->getMockBuilder(AbstractPage::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $page->expects(self::once())
+            ->method('isVisible')
+            ->with(false)
+            ->willReturn(true);
+        $page->expects(self::once())
+            ->method('getResource')
+            ->willReturn($resource);
+        $page->expects(self::once())
+            ->method('getPrivilege')
+            ->willReturn($privilege);
+        $page->expects(self::once())
+            ->method('getParent')
+            ->willReturn($parentPage);
+        $page->expects(self::never())
+            ->method('getOrder');
+        $page->expects(self::never())
+            ->method('setParent');
+
+        assert($page instanceof AbstractPage);
+        self::assertTrue($helper->accept($page));
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws BadMethodCallException
+     */
+    public function testDoNotAcceptByAuthorizationWithParent8(): void
+    {
+        $role     = 'testRole';
+        $resource = 'testResource';
+
+        $auth = $this->getMockBuilder(AuthorizationInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $auth->expects(self::once())
+            ->method('isGranted')
+            ->with($role, $resource, null)
+            ->willReturn(true);
+
+        assert($auth instanceof AuthorizationInterface);
+        $helper = new AcceptHelper($auth, false, $role);
+
+        $parentPage = $this->getMockBuilder(AbstractPage::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $parentPage->expects(self::once())
+            ->method('isVisible')
+            ->with(false)
+            ->willReturn(false);
+        $parentPage->expects(self::never())
+            ->method('getOrder');
+        $parentPage->expects(self::never())
+            ->method('setParent');
+
+        $page = $this->getMockBuilder(AbstractPage::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $page->expects(self::once())
+            ->method('isVisible')
+            ->with(false)
+            ->willReturn(true);
+        $page->expects(self::once())
+            ->method('getResource')
+            ->willReturn($resource);
+        $page->expects(self::once())
+            ->method('getPrivilege')
+            ->willReturn(null);
+        $page->expects(self::once())
+            ->method('getParent')
+            ->willReturn($parentPage);
+        $page->expects(self::never())
+            ->method('getOrder');
+        $page->expects(self::never())
+            ->method('setParent');
+
+        assert($page instanceof AbstractPage);
         self::assertFalse($helper->accept($page));
     }
 }
