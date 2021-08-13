@@ -12,13 +12,13 @@ declare(strict_types = 1);
 
 namespace Mimmi20\NavigationHelper\Accept;
 
+use Laminas\Navigation\Page\AbstractPage;
 use Mezzio\Navigation\Page\PageInterface;
 
 interface AcceptHelperInterface
 {
     /**
      * Determines whether a page should be accepted when iterating
-     *
      * Rules:
      * - If a page is not visible it is not accepted, unless RenderInvisible has
      *   been set to true
@@ -27,13 +27,11 @@ interface AcceptHelperInterface
      * - If page is accepted and $recursive is true, the page
      *   will not be accepted if it is the descendant of a non-accepted page
      *
-     * @param PageInterface $page      page to check
-     * @param bool          $recursive [optional] if true, page will not be
-     *                                 accepted if it is the descendant of
-     *                                 a page that is not accepted. Default
-     *                                 is true
+     * @param AbstractPage|PageInterface $page      page to check
+     * @param bool                       $recursive [optional] if true, page will not be accepted, if it is the descendant of a page that is not accepted.
+     *                                              Default is true
      *
      * @return bool Whether page should be accepted
      */
-    public function accept(PageInterface $page, bool $recursive = true): bool;
+    public function accept($page, bool $recursive = true): bool;
 }

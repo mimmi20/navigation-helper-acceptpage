@@ -52,7 +52,6 @@ final class AcceptHelper implements AcceptHelperInterface
 
     /**
      * Determines whether a page should be accepted when iterating
-     *
      * Rules:
      * - If a page is not visible it is not accepted, unless RenderInvisible has
      *   been set to true
@@ -62,10 +61,8 @@ final class AcceptHelper implements AcceptHelperInterface
      *   will not be accepted if it is the descendant of a non-accepted page
      *
      * @param AbstractPage|PageInterface $page      page to check
-     * @param bool                       $recursive [optional] if true, page will not be
-     *                                              accepted if it is the descendant of
-     *                                              a page that is not accepted. Default
-     *                                              is true
+     * @param bool                       $recursive [optional] if true, page will not be accepted, if it is the descendant of a page that is not accepted.
+     *                                              Default is true
      *
      * @return bool Whether page should be accepted
      */
