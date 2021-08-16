@@ -484,7 +484,6 @@ final class AcceptHelperTest extends TestCase
     /**
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws BadMethodCallException
      */
     public function testDoNotAcceptByAuthorizationWithParent7(): void
     {
@@ -542,7 +541,6 @@ final class AcceptHelperTest extends TestCase
     /**
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws BadMethodCallException
      */
     public function testDoNotAcceptByAuthorizationWithParent8(): void
     {
