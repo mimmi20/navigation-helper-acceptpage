@@ -13,7 +13,6 @@ declare(strict_types = 1);
 namespace Mimmi20Test\NavigationHelper\Accept;
 
 use Laminas\Navigation\AbstractContainer;
-use Laminas\Navigation\Exception\BadMethodCallException;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
