@@ -2,7 +2,7 @@
 /**
  * This file is part of the mimmi20/navigation-helper-acceptpage package.
  *
- * Copyright (c) 2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2021-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,29 +16,23 @@ use Laminas\Navigation\AbstractContainer;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mezzio\Navigation\ContainerInterface;
+use Mezzio\Navigation\Exception\InvalidArgumentException;
 use Mezzio\Navigation\Page\PageInterface;
 use Mezzio\Navigation\Page\Uri;
+use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\NavigationHelper\Accept\AcceptHelper;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
-
-use function assert;
 
 final class AcceptHelperTest extends TestCase
 {
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptInvisiblePages(): void
     {
         $role = 'testRole';
         $auth = $this->createMock(AuthorizationInterface::class);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $page = $this->getMockBuilder(PageInterface::class)
@@ -59,14 +53,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorization(): void
     {
         $role      = 'testRole';
@@ -81,7 +71,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, $privilege)
             ->willReturn(false);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $page = $this->getMockBuilder(PageInterface::class)
@@ -104,14 +93,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent(): void
     {
         $role      = 'testRole';
@@ -126,7 +111,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, $privilege)
             ->willReturn(true);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
@@ -166,14 +150,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent2(): void
     {
         $role = 'testRole';
@@ -184,7 +164,6 @@ final class AcceptHelperTest extends TestCase
         $auth->expects(self::never())
             ->method('isGranted');
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
@@ -224,14 +203,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent3(): void
     {
         $role      = 'testRole';
@@ -245,7 +220,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, null, $privilege)
             ->willReturn(true);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
@@ -285,14 +259,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent4(): void
     {
         $role     = 'testRole';
@@ -306,7 +276,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, null)
             ->willReturn(true);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
@@ -346,14 +315,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent5(): void
     {
         $role     = 'testRole';
@@ -367,7 +332,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, null)
             ->willReturn(true);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $page = $this->getMockBuilder(PageInterface::class)
@@ -392,14 +356,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertTrue($helper->accept($page, false));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent6(): void
     {
         $role      = 'testRole';
@@ -414,7 +374,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, $privilege)
             ->willReturn(true);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(ContainerInterface::class)
@@ -444,14 +403,12 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof PageInterface);
         self::assertTrue($helper->accept($page));
     }
 
     /**
      * @throws Exception
      * @throws InvalidArgumentException
-     * @throws \Mezzio\Navigation\Exception\InvalidArgumentException
      */
     public function testDoNotAcceptInvisibleParent(): void
     {
@@ -473,17 +430,12 @@ final class AcceptHelperTest extends TestCase
         $auth->expects(self::never())
             ->method('isGranted');
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
-        assert($page instanceof PageInterface);
         self::assertFalse($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent7(): void
     {
         $role       = 'testRole';
@@ -505,7 +457,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resourceId, $privilege)
             ->willReturn(true);
 
-        assert($auth instanceof Acl);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(AbstractContainer::class)
@@ -533,14 +484,10 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof AbstractPage);
         self::assertTrue($helper->accept($page));
     }
 
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
+    /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent8(): void
     {
         $role     = 'testRole';
@@ -554,7 +501,6 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, null)
             ->willReturn(true);
 
-        assert($auth instanceof AuthorizationInterface);
         $helper = new AcceptHelper($auth, false, $role);
 
         $parentPage = $this->getMockBuilder(AbstractPage::class)
@@ -590,7 +536,6 @@ final class AcceptHelperTest extends TestCase
         $page->expects(self::never())
             ->method('setParent');
 
-        assert($page instanceof AbstractPage);
         self::assertFalse($helper->accept($page));
     }
 }
