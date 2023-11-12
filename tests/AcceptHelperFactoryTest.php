@@ -2,7 +2,7 @@
 /**
  * This file is part of the mimmi20/navigation-helper-acceptpage package.
  *
- * Copyright (c) 2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2021-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,12 +14,12 @@ namespace Mimmi20Test\NavigationHelper\Accept;
 
 use Interop\Container\ContainerInterface;
 use Laminas\Permissions\Acl\Acl;
-use Mezzio\GenericAuthorization\AuthorizationInterface;
+use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\NavigationHelper\Accept\AcceptHelper;
 use Mimmi20\NavigationHelper\Accept\AcceptHelperFactory;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
 
 use function assert;
 
@@ -27,6 +27,7 @@ final class AcceptHelperFactoryTest extends TestCase
 {
     private AcceptHelperFactory $factory;
 
+    /** @throws void */
     protected function setUp(): void
     {
         $this->factory = new AcceptHelperFactory();
@@ -34,7 +35,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
     /**
      * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws ContainerExceptionInterface
      */
     public function testInvocationWithoutOptions(): void
     {
@@ -56,7 +57,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
     /**
      * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws ContainerExceptionInterface
      */
     public function testInvocationWithOptions(): void
     {
@@ -78,7 +79,7 @@ final class AcceptHelperFactoryTest extends TestCase
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
                 'role' => $role,
-            ]
+            ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);
@@ -90,7 +91,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
     /**
      * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws ContainerExceptionInterface
      */
     public function testInvocationWithOptions2(): void
     {
@@ -112,7 +113,7 @@ final class AcceptHelperFactoryTest extends TestCase
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
                 'role' => $role,
-            ]
+            ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);
@@ -124,7 +125,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
     /**
      * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws ContainerExceptionInterface
      */
     public function testInvocationWithOptions3(): void
     {
@@ -146,7 +147,7 @@ final class AcceptHelperFactoryTest extends TestCase
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
                 'role' => $role,
-            ]
+            ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);
@@ -158,7 +159,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
     /**
      * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws ContainerExceptionInterface
      */
     public function testInvocationWithOptionsRuleNotString(): void
     {
@@ -180,7 +181,7 @@ final class AcceptHelperFactoryTest extends TestCase
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
                 'role' => $role,
-            ]
+            ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);

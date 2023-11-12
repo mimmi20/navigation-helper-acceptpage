@@ -2,7 +2,7 @@
 /**
  * This file is part of the mimmi20/navigation-helper-acceptpage package.
  *
- * Copyright (c) 2021, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2021-2023, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,39 +15,18 @@ namespace Mimmi20\NavigationHelper\Accept;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mezzio\Navigation\Page\PageInterface;
+use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 
 final class AcceptHelper implements AcceptHelperInterface
 {
-    /**
-     * Authorization to use when iterating pages
-     *
-     * @var Acl|AuthorizationInterface|null
-     */
-    private $authorization;
-
-    /**
-     * Whether invisible items should be rendered by this helper
-     */
-    private bool $renderInvisible = false;
-
-    /**
-     * Authorization role to use when iterating pages
-     */
-    private ?string $role = null;
-
-    /**
-     * @param Acl|AuthorizationInterface|null $authorization
-     */
+    /** @throws void */
     public function __construct(
-        $authorization,
-        bool $renderInvisible,
-        ?string $role
+        private readonly Acl | AuthorizationInterface | null $authorization,
+        private readonly bool $renderInvisible,
+        private readonly string | null $role,
     ) {
-        $this->authorization   = $authorization;
-        $this->renderInvisible = $renderInvisible;
-        $this->role            = $role;
+        // nothing to do
     }
 
     /**
@@ -65,8 +44,10 @@ final class AcceptHelper implements AcceptHelperInterface
      *                                              Default is true
      *
      * @return bool Whether page should be accepted
+     *
+     * @throws void
      */
-    public function accept($page, bool $recursive = true): bool
+    public function accept(AbstractPage | PageInterface $page, bool $recursive = true): bool
     {
         if (!$page->isVisible(false) && !$this->renderInvisible) {
             return false;
@@ -80,7 +61,7 @@ final class AcceptHelper implements AcceptHelperInterface
             $resource = $resource->getResourceId();
         }
 
-        if (null !== $resource || null !== $privilege) {
+        if ($resource !== null || $privilege !== null) {
             if ($this->authorization instanceof AuthorizationInterface) {
                 $accept = $this->authorization->isGranted($this->role, $resource, $privilege);
             }
@@ -101,20 +82,20 @@ final class AcceptHelper implements AcceptHelperInterface
         return $accept;
     }
 
-    /**
-     * @return Acl|AuthorizationInterface|null
-     */
-    public function getAuthorization()
+    /** @throws void */
+    public function getAuthorization(): Acl | AuthorizationInterface | null
     {
         return $this->authorization;
     }
 
+    /** @throws void */
     public function getRenderInvisible(): bool
     {
         return $this->renderInvisible;
     }
 
-    public function getRole(): ?string
+    /** @throws void */
+    public function getRole(): string | null
     {
         return $this->role;
     }
