@@ -13,7 +13,7 @@ declare(strict_types = 1);
 namespace Mimmi20\NavigationHelper\Accept;
 
 use Laminas\Navigation\Page\AbstractPage;
-use Mezzio\Navigation\Page\PageInterface;
+use Mimmi20\Mezzio\Navigation\Page\PageInterface;
 
 interface AcceptHelperInterface
 {

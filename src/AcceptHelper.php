@@ -15,7 +15,7 @@ namespace Mimmi20\NavigationHelper\Accept;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use Mezzio\Navigation\Page\PageInterface;
+use Mimmi20\Mezzio\Navigation\Page\PageInterface;
 use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 
 final class AcceptHelper implements AcceptHelperInterface
