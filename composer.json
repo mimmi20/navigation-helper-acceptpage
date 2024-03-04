@@ -1,81 +1,81 @@
 {
-    "name": "mimmi20/navigation-helper-acceptpage",
-    "description": "Provides a accept-page helper for Laminas- and Mezzio Navigation",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Thomas Müller",
-            "homepage": "https://github.com/mimmi20",
-            "role": "Developer"
-        }
-    ],
-    "homepage": "https://github.com/mimmi20/navigation-helper-acceptpage",
-    "support": {
-        "issues": "https://github.com/mimmi20/navigation-helper-acceptpage/issues",
-        "source": "https://github.com/mimmi20/navigation-helper-acceptpage"
-    },
-    "require": {
-        "php": "^8.1.0"
-    },
-    "require-dev": {
-        "ext-ctype": "*",
-        "ext-dom": "*",
-        "ext-intl": "*",
-        "ext-simplexml": "*",
-        "ext-tokenizer": "*",
-        "ext-xml": "*",
-        "ext-xmlwriter": "*",
-        "infection/infection": "^0.27.10",
-        "laminas/laminas-modulemanager": "^2.15.0",
-        "laminas/laminas-navigation": "^2.19.1",
-        "laminas/laminas-permissions-acl": "^2.16.0",
-        "laminas/laminas-servicemanager": "^3.22.1",
-        "mimmi20/coding-standard": "^5.2.16",
-        "mimmi20/mezzio-generic-authorization": "^3.0.4",
-        "mimmi20/mezzio-navigation": "^3.0.4",
-        "phpstan/extension-installer": "^1.3.1",
-        "phpstan/phpstan": "^1.10.59",
-        "phpstan/phpstan-deprecation-rules": "^1.1.4",
-        "phpstan/phpstan-phpunit": "^1.3.16",
-        "phpunit/phpunit": "^10.5.11",
-        "rector/rector": "^1.0.1"
-    },
-    "suggest": {
-        "ext-intl": "required to use the Translator",
-        "laminas/laminas-config": "to provide page configuration (optional, as arrays and Traversables are also allowed)",
-        "laminas/laminas-i18n": "Required to use the Translator",
-        "laminas/laminas-navigation": "Required to use with Laminas",
-        "laminas/laminas-permissions-acl": "Required to use authrization roles or privileges with Laminas",
-        "laminas/laminas-servicemanager": "Required to use the navigation factories",
-        "mimmi20/mezzio-generic-authorization": "Required to use authrization roles or privileges with Mezzio",
-        "mimmi20/mezzio-navigation": "Required to use with Mezzio"
-    },
-    "autoload": {
-        "psr-4": {
-            "Mimmi20\\NavigationHelper\\Accept\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Mimmi20Test\\NavigationHelper\\Accept\\": "tests/"
-        }
-    },
-    "config": {
-        "preferred-install": "dist",
-        "lock": false,
-        "sort-packages": true,
-        "allow-plugins": {
-            "laminas/laminas-dependency-plugin": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true,
-            "infection/extension-installer": true
-        }
-    },
-    "extra": {
-        "laminas": {
-            "component": "Mimmi20\\NavigationHelper\\Accept",
-            "config-provider": "Mimmi20\\NavigationHelper\\Accept\\ConfigProvider"
-        }
+  "name": "mimmi20/navigation-helper-acceptpage",
+  "description": "Provides a accept-page helper for Laminas- and Mezzio Navigation",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Thomas Müller",
+      "homepage": "https://github.com/mimmi20",
+      "role": "Developer"
     }
+  ],
+  "homepage": "https://github.com/mimmi20/navigation-helper-acceptpage",
+  "support": {
+    "issues": "https://github.com/mimmi20/navigation-helper-acceptpage/issues",
+    "source": "https://github.com/mimmi20/navigation-helper-acceptpage"
+  },
+  "require": {
+    "php": "^8.1.0"
+  },
+  "require-dev": {
+    "ext-ctype": "*",
+    "ext-dom": "*",
+    "ext-intl": "*",
+    "ext-simplexml": "*",
+    "ext-tokenizer": "*",
+    "ext-xml": "*",
+    "ext-xmlwriter": "*",
+    "infection/infection": "^0.27.10",
+    "laminas/laminas-modulemanager": "^2.15.0",
+    "laminas/laminas-navigation": "^2.19.1",
+    "laminas/laminas-permissions-acl": "^2.16.0",
+    "laminas/laminas-servicemanager": "^3.22.1",
+    "mimmi20/coding-standard": "^5.2.16",
+    "mimmi20/mezzio-generic-authorization": "^3.0.4",
+    "mimmi20/mezzio-navigation": "^3.0.4",
+    "phpstan/extension-installer": "^1.3.1",
+    "phpstan/phpstan": "^1.10.59",
+    "phpstan/phpstan-deprecation-rules": "^1.1.4",
+    "phpstan/phpstan-phpunit": "^1.3.16",
+    "phpunit/phpunit": "^10.5.11",
+    "rector/rector": "^1.0.1"
+  },
+  "suggest": {
+    "ext-intl": "required to use the Translator",
+    "laminas/laminas-config": "to provide page configuration (optional, as arrays and Traversables are also allowed)",
+    "laminas/laminas-i18n": "Required to use the Translator",
+    "laminas/laminas-navigation": "Required to use with Laminas",
+    "laminas/laminas-permissions-acl": "Required to use authrization roles or privileges with Laminas",
+    "laminas/laminas-servicemanager": "Required to use the navigation factories",
+    "mimmi20/mezzio-generic-authorization": "Required to use authrization roles or privileges with Mezzio",
+    "mimmi20/mezzio-navigation": "Required to use with Mezzio"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mimmi20\\NavigationHelper\\Accept\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Mimmi20Test\\NavigationHelper\\Accept\\": "tests/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "lock": false,
+    "sort-packages": true,
+    "allow-plugins": {
+      "laminas/laminas-dependency-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true,
+      "infection/extension-installer": true
+    }
+  },
+  "extra": {
+    "laminas": {
+      "component": "Mimmi20\\NavigationHelper\\Accept",
+      "config-provider": "Mimmi20\\NavigationHelper\\Accept\\ConfigProvider"
+    }
+  }
 }
