@@ -12,7 +12,6 @@ declare(strict_types = 1);
 
 namespace Mimmi20Test\NavigationHelper\Accept;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Permissions\Acl\Acl;
 use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\NavigationHelper\Accept\AcceptHelper;
@@ -20,6 +19,7 @@ use Mimmi20\NavigationHelper\Accept\AcceptHelperFactory;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 
 use function assert;
 
