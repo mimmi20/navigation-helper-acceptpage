@@ -82,19 +82,31 @@ final class AcceptHelper implements AcceptHelperInterface
         return $accept;
     }
 
-    /** @throws void */
+    /**
+     * @throws void
+     *
+     * @api
+     */
     public function getAuthorization(): Acl | AuthorizationInterface | null
     {
         return $this->authorization;
     }
 
-    /** @throws void */
+    /**
+     * @throws void
+     *
+     * @api
+     */
     public function getRenderInvisible(): bool
     {
         return $this->renderInvisible;
     }
 
-    /** @throws void */
+    /**
+     * @throws void
+     *
+     * @api
+     */
     public function getRole(): string | null
     {
         return $this->role;
