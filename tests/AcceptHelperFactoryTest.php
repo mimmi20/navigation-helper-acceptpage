@@ -16,6 +16,7 @@ use Laminas\Permissions\Acl\Acl;
 use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\NavigationHelper\Accept\AcceptHelper;
 use Mimmi20\NavigationHelper\Accept\AcceptHelperFactory;
+use Override;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
@@ -28,6 +29,7 @@ final class AcceptHelperFactoryTest extends TestCase
     private AcceptHelperFactory $factory;
 
     /** @throws void */
+    #[Override]
     protected function setUp(): void
     {
         $this->factory = new AcceptHelperFactory();

@@ -17,14 +17,15 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\Mezzio\Navigation\Page\PageInterface;
+use Override;
 
-final class AcceptHelper implements AcceptHelperInterface
+final readonly class AcceptHelper implements AcceptHelperInterface
 {
     /** @throws void */
     public function __construct(
-        private readonly Acl | AuthorizationInterface | null $authorization,
-        private readonly bool $renderInvisible,
-        private readonly string | null $role,
+        private Acl | AuthorizationInterface | null $authorization,
+        private bool $renderInvisible,
+        private string | null $role,
     ) {
         // nothing to do
     }
@@ -47,6 +48,7 @@ final class AcceptHelper implements AcceptHelperInterface
      *
      * @throws void
      */
+    #[Override]
     public function accept(AbstractPage | PageInterface $page, bool $recursive = true): bool
     {
         if (!$page->isVisible(false) && !$this->renderInvisible) {

@@ -15,6 +15,7 @@ namespace Mimmi20\NavigationHelper\Accept;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 use function array_key_exists;
@@ -26,16 +27,18 @@ final class AcceptHelperFactory implements FactoryInterface
     /**
      * Create and return a navigation view helper instance.
      *
-     * @param string            $requestedName
      * @param array<mixed>|null $options
      *
      * @throws void
      *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array | null $options = null): AcceptHelper
-    {
+    #[Override]
+    public function __invoke(
+        ContainerInterface $container,
+        string $requestedName,
+        array | null $options = null,
+    ): AcceptHelper {
         $authorization   = null;
         $renderInvisible = false;
         $role            = null;
