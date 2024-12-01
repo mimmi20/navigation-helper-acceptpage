@@ -27,7 +27,7 @@ final class AcceptHelperFactory implements FactoryInterface
     /**
      * Create and return a navigation view helper instance.
      *
-     * @param string $requestedName
+     * @param string            $requestedName
      * @param array<mixed>|null $options
      *
      * @throws void
