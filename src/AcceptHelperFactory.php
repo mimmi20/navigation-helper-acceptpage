@@ -21,7 +21,6 @@ use Psr\Container\ContainerInterface;
 
 use function array_key_exists;
 use function is_array;
-use function is_string;
 
 final class AcceptHelperFactory implements FactoryInterface
 {
@@ -44,7 +43,7 @@ final class AcceptHelperFactory implements FactoryInterface
     ): AcceptHelper {
         $authorization   = null;
         $renderInvisible = false;
-        $role            = null;
+        $roles           = [];
 
         if (is_array($options)) {
             if (
@@ -60,11 +59,11 @@ final class AcceptHelperFactory implements FactoryInterface
                 $renderInvisible = (bool) $options['renderInvisible'];
             }
 
-            if (array_key_exists('role', $options) && is_string($options['role'])) {
-                $role = $options['role'];
+            if (array_key_exists('roles', $options) && is_array($options['roles'])) {
+                $roles = $options['roles'];
             }
         }
 
-        return new AcceptHelper($authorization, $renderInvisible, $role);
+        return new AcceptHelper($authorization, $renderInvisible, $roles);
     }
 }
