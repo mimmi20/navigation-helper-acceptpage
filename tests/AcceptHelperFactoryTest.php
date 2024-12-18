@@ -54,7 +54,7 @@ final class AcceptHelperFactoryTest extends TestCase
         self::assertInstanceOf(AcceptHelper::class, $helper);
 
         self::assertNull($helper->getAuthorization());
-        self::assertNull($helper->getRole());
+        self::assertSame([], $helper->getRoles());
         self::assertFalse($helper->getRenderInvisible());
     }
 
@@ -72,7 +72,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
         $auth            = $this->createMock(AuthorizationInterface::class);
         $renderInvisible = true;
-        $role            = 'test-role';
+        $roles           = ['test-role'];
 
         assert($container instanceof ContainerInterface);
         $helper = ($this->factory)(
@@ -81,14 +81,14 @@ final class AcceptHelperFactoryTest extends TestCase
             [
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
-                'role' => $role,
+                'roles' => $roles,
             ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);
 
         self::assertSame($auth, $helper->getAuthorization());
-        self::assertSame($role, $helper->getRole());
+        self::assertSame($roles, $helper->getRoles());
         self::assertTrue($helper->getRenderInvisible());
     }
 
@@ -106,7 +106,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
         $auth            = 'invalid-auth';
         $renderInvisible = '1';
-        $role            = null;
+        $roles           = [];
 
         assert($container instanceof ContainerInterface);
         $helper = ($this->factory)(
@@ -115,14 +115,14 @@ final class AcceptHelperFactoryTest extends TestCase
             [
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
-                'role' => $role,
+                'roles' => $roles,
             ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);
 
         self::assertNull($helper->getAuthorization());
-        self::assertNull($helper->getRole());
+        self::assertSame($roles, $helper->getRoles());
         self::assertTrue($helper->getRenderInvisible());
     }
 
@@ -140,7 +140,7 @@ final class AcceptHelperFactoryTest extends TestCase
 
         $auth            = $this->createMock(Acl::class);
         $renderInvisible = true;
-        $role            = 'test-role';
+        $roles           = ['test-role'];
 
         assert($container instanceof ContainerInterface);
         $helper = ($this->factory)(
@@ -149,14 +149,14 @@ final class AcceptHelperFactoryTest extends TestCase
             [
                 'authorization' => $auth,
                 'renderInvisible' => $renderInvisible,
-                'role' => $role,
+                'roles' => $roles,
             ],
         );
 
         self::assertInstanceOf(AcceptHelper::class, $helper);
 
         self::assertSame($auth, $helper->getAuthorization());
-        self::assertSame($role, $helper->getRole());
+        self::assertSame($roles, $helper->getRoles());
         self::assertTrue($helper->getRenderInvisible());
     }
 
@@ -190,7 +190,7 @@ final class AcceptHelperFactoryTest extends TestCase
         self::assertInstanceOf(AcceptHelper::class, $helper);
 
         self::assertNull($helper->getAuthorization());
-        self::assertNull($helper->getRole());
+        self::assertSame([], $helper->getRoles());
         self::assertTrue($helper->getRenderInvisible());
     }
 }

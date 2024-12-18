@@ -16,17 +16,25 @@ namespace Mimmi20\NavigationHelper\Accept;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Role\RoleInterface;
 use Mimmi20\Mezzio\GenericAuthorization\AuthorizationInterface;
 use Mimmi20\Mezzio\Navigation\Page\PageInterface;
 use Override;
 
+use function assert;
+use function is_string;
+
 final readonly class AcceptHelper implements AcceptHelperInterface
 {
-    /** @throws void */
+    /**
+     * @param array<RoleInterface|string> $roles
+     *
+     * @throws void
+     */
     public function __construct(
         private Acl | AuthorizationInterface | null $authorization,
         private bool $renderInvisible,
-        private string | null $role,
+        private array $roles,
     ) {
         // nothing to do
     }
@@ -66,11 +74,11 @@ final readonly class AcceptHelper implements AcceptHelperInterface
 
         if ($resource !== null || $privilege !== null) {
             if ($this->authorization instanceof AuthorizationInterface) {
-                $accept = $this->authorization->isGranted($this->role, $resource, $privilege);
+                $accept = $this->grandFromAuth($resource, $privilege);
             }
 
             if ($this->authorization instanceof Acl) {
-                $accept = $this->authorization->isAllowed($this->role, $resource, $privilege);
+                $accept = $this->grandFromAcl($resource, $privilege);
             }
         }
 
@@ -106,12 +114,43 @@ final readonly class AcceptHelper implements AcceptHelperInterface
     }
 
     /**
+     * @return array<RoleInterface|string>
+     *
      * @throws void
      *
      * @api
      */
-    public function getRole(): string | null
+    public function getRoles(): array
     {
-        return $this->role;
+        return $this->roles;
+    }
+
+    /** @throws void */
+    private function grandFromAuth(string | null $resource, string | null $privilege): bool
+    {
+        foreach ($this->roles as $role) {
+            assert($this->authorization instanceof AuthorizationInterface);
+            assert(is_string($role));
+
+            if ($this->authorization->isGranted($role, $resource, $privilege)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** @throws void */
+    private function grandFromAcl(string | null $resource, string | null $privilege): bool
+    {
+        foreach ($this->roles as $role) {
+            assert($this->authorization instanceof Acl);
+
+            if ($this->authorization->isAllowed($role, $resource, $privilege)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

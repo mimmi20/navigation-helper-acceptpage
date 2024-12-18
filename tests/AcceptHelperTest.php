@@ -31,10 +31,10 @@ final class AcceptHelperTest extends TestCase
     /** @throws Exception */
     public function testDoNotAcceptInvisiblePages(): void
     {
-        $role = 'testRole';
-        $auth = $this->createMock(AuthorizationInterface::class);
+        $roles = ['testRole'];
+        $auth  = $this->createMock(AuthorizationInterface::class);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $page = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -61,6 +61,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorization(): void
     {
         $role      = 'testRole';
+        $roles     = [$role];
         $resource  = 'testResource';
         $privilege = 'testPrivilege';
 
@@ -72,7 +73,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, $privilege)
             ->willReturn(false);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $page = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -101,6 +102,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent(): void
     {
         $role      = 'testRole';
+        $roles     = [$role];
         $resource  = 'testResource';
         $privilege = 'testPrivilege';
 
@@ -112,7 +114,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, $privilege)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -157,7 +159,8 @@ final class AcceptHelperTest extends TestCase
     /** @throws Exception */
     public function testDoNotAcceptByAuthorizationWithParent2(): void
     {
-        $role = 'testRole';
+        $role  = 'testRole';
+        $roles = [$role];
 
         $auth = $this->getMockBuilder(AuthorizationInterface::class)
             ->disableOriginalConstructor()
@@ -165,7 +168,7 @@ final class AcceptHelperTest extends TestCase
         $auth->expects(self::never())
             ->method('isGranted');
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -211,6 +214,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent3(): void
     {
         $role      = 'testRole';
+        $roles     = [$role];
         $privilege = 'testPrivilege';
 
         $auth = $this->getMockBuilder(AuthorizationInterface::class)
@@ -221,7 +225,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, null, $privilege)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -267,6 +271,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent4(): void
     {
         $role     = 'testRole';
+        $roles    = [$role];
         $resource = 'testResource';
 
         $auth = $this->getMockBuilder(AuthorizationInterface::class)
@@ -277,7 +282,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, null)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -323,6 +328,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent5(): void
     {
         $role     = 'testRole';
+        $roles    = [$role];
         $resource = 'testResource';
 
         $auth = $this->getMockBuilder(AuthorizationInterface::class)
@@ -333,7 +339,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, null)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $page = $this->getMockBuilder(PageInterface::class)
             ->disableOriginalConstructor()
@@ -364,6 +370,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent6(): void
     {
         $role      = 'testRole';
+        $roles     = [$role];
         $resource  = 'testResource';
         $privilege = 'testPrivilege';
 
@@ -375,7 +382,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, $privilege)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
@@ -423,7 +430,8 @@ final class AcceptHelperTest extends TestCase
 
         $parentPage->addPage($page);
 
-        $role = 'testRole';
+        $role  = 'testRole';
+        $roles = [$role];
 
         $auth = $this->getMockBuilder(AuthorizationInterface::class)
             ->disableOriginalConstructor()
@@ -431,7 +439,7 @@ final class AcceptHelperTest extends TestCase
         $auth->expects(self::never())
             ->method('isGranted');
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         self::assertFalse($helper->accept($page));
     }
@@ -440,6 +448,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent7(): void
     {
         $role       = 'testRole';
+        $roles      = [$role];
         $resourceId = 'testResource';
         $privilege  = 'testPrivilege';
 
@@ -458,7 +467,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resourceId, $privilege)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(AbstractContainer::class)
             ->disableOriginalConstructor()
@@ -492,6 +501,7 @@ final class AcceptHelperTest extends TestCase
     public function testDoNotAcceptByAuthorizationWithParent8(): void
     {
         $role     = 'testRole';
+        $roles    = [$role];
         $resource = 'testResource';
 
         $auth = $this->getMockBuilder(AuthorizationInterface::class)
@@ -502,7 +512,7 @@ final class AcceptHelperTest extends TestCase
             ->with($role, $resource, null)
             ->willReturn(true);
 
-        $helper = new AcceptHelper($auth, false, $role);
+        $helper = new AcceptHelper($auth, false, $roles);
 
         $parentPage = $this->getMockBuilder(AbstractPage::class)
             ->disableOriginalConstructor()
