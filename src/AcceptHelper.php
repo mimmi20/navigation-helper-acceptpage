@@ -22,6 +22,7 @@ use Mimmi20\Mezzio\Navigation\Page\PageInterface;
 use Override;
 
 use function assert;
+use function count;
 use function is_string;
 
 final readonly class AcceptHelper implements AcceptHelperInterface
@@ -128,11 +129,21 @@ final readonly class AcceptHelper implements AcceptHelperInterface
     /** @throws void */
     private function grandFromAuth(string | null $resource, string | null $privilege): bool
     {
-        foreach ($this->roles as $role) {
-            assert($this->authorization instanceof AuthorizationInterface);
-            assert(is_string($role));
+        $roles = $this->roles;
 
-            if ($this->authorization->isGranted($role, $resource, $privilege)) {
+        if (count($roles)) {
+            foreach ($roles as $role) {
+                assert($this->authorization instanceof AuthorizationInterface);
+                assert(is_string($role));
+
+                if ($this->authorization->isGranted($role, $resource, $privilege)) {
+                    return true;
+                }
+            }
+        } else {
+            assert($this->authorization instanceof AuthorizationInterface);
+
+            if ($this->authorization->isGranted(null, $resource, $privilege)) {
                 return true;
             }
         }
@@ -143,10 +154,20 @@ final readonly class AcceptHelper implements AcceptHelperInterface
     /** @throws void */
     private function grandFromAcl(string | null $resource, string | null $privilege): bool
     {
-        foreach ($this->roles as $role) {
+        $roles = $this->roles;
+
+        if (count($roles)) {
+            foreach ($roles as $role) {
+                assert($this->authorization instanceof Acl);
+
+                if ($this->authorization->isAllowed($role, $resource, $privilege)) {
+                    return true;
+                }
+            }
+        } else {
             assert($this->authorization instanceof Acl);
 
-            if ($this->authorization->isAllowed($role, $resource, $privilege)) {
+            if ($this->authorization->isAllowed(null, $resource, $privilege)) {
                 return true;
             }
         }
