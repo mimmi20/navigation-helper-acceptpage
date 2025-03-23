@@ -23,12 +23,17 @@ use Mimmi20\Mezzio\Navigation\Exception\InvalidArgumentException;
 use Mimmi20\Mezzio\Navigation\Page\PageInterface;
 use Mimmi20\Mezzio\Navigation\Page\Uri;
 use Mimmi20\NavigationHelper\Accept\AcceptHelper;
+use PHPUnit\Event\NoPreviousThrowableException;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
 final class AcceptHelperTest extends TestCase
 {
-    /** @throws Exception */
+    /**
+     * @throws Exception
+     * @throws NoPreviousThrowableException
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
     public function testDoNotAcceptInvisiblePages(): void
     {
         $roles = ['testRole'];
