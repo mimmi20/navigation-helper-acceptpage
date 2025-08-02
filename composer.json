@@ -1,6 +1,6 @@
 {
   "name": "mimmi20/navigation-helper-acceptpage",
-  "description": "Provides a accept-page helper for Laminas- and Mezzio Navigation",
+  "description": "Provides a accept-page helper for Mezzio Navigation",
   "license": "MIT",
   "type": "library",
   "authors": [
