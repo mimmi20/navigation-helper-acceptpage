@@ -112,6 +112,10 @@ updates:
     ignore:
       - dependency-name: "laminas/laminas-servicemanager"
       - dependency-name: "psr/container"
+      - dependency-name: "mimmi20/mezzio-generic-authorization"
+        versions: [ ">=5.0.0" ]
+      - dependency-name: "mimmi20/mezzio-navigation"
+        versions: [ ">=5.0.0" ]
 
     rebase-strategy: "disabled"
 
